@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 #Epsilon Greedy Method: x=qt, y=teps, z=_
 def Greedy_method(Q, epsilon, numA):
 	qt = Q[0];
-	if np.random.rand() <= y: #epsilon part
+	if np.random.rand() <= epsilon: #epsilon part
 		arm = np.random.randint(0, numA);
 	else: #greedy part
 		#arm = np.where(max(qT[bi, :])==qT[bi,:])[0][0];
@@ -51,7 +51,7 @@ def Softmax_method(Q, epsilon):
 def initial_velection(optimis, numA, te):
 	qN = np.zeros((1, numA));
 	#inital values set to zeros
-	if optimis == 1:
+	if optimis == 0:
 		qT = np.zeros((1, numA));
 	#initial values set to be optimistic
 	else:
@@ -72,10 +72,10 @@ def initial_velection(optimis, numA, te):
 def n_armed_testbed(nBandit=2000, nArm=10, nPlay=1000, sigma=1.0, func_selection=0, optimistic=0):
 	#function = 1 for epsilon-greedy method else for softmax function
 
-	if optimistic == 0 and func_selection = 0:
+	if optimistic == 0 and func_selection == 0:
 		#A set of epsilon for softmax function
 		eps = [0.01, 0.1, 1];
-	else if optimistic == 0 and func_selection == 1:
+	elif optimistic == 0 and func_selection == 1:
 		#set of epsilon for greedy method
 		eps = [0, 0.01, 0.1];
 	else:
@@ -134,9 +134,9 @@ def n_armed_testbed(nBandit=2000, nArm=10, nPlay=1000, sigma=1.0, func_selection
 				Rewards[bi, p] = reward;
 				
 				#update qN, qT
-				qT[0, arm] = qT[0, arm] + (reward - qT[0, arm])/(qN[0, arm] + 1);
-				#qT[0, arm] = qT[0, arm] + 0.1*(reward - qT[0, arm]);
- 				qN[0, arm] = qN[0, arm] + 1.0;
+				#qT[0, arm] = qT[0, arm] + (reward - qT[0, arm])/(qN[0, arm] + 1);
+				qT[0, arm] = qT[0, arm] + 0.1*(reward - qT[0, arm]);
+ 				#qN[0, arm] = qN[0, arm] + 1.0;
 		
 		#calculation of average action
 		avg = np.mean(Rewards, 0);
@@ -179,4 +179,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
